@@ -1,17 +1,88 @@
 # Full reference https://github.com/foundry-rs/foundry/tree/master/config
 
 [profile.default]
+block_coinbase = '0x0000000000000000000000000000000000000000'
+block_difficulty = 0
+block_number = 1
+block_timestamp = 1
+broadcast = 'broadcast'
+bytecode_hash = 'none'
+cache = true
+cache_path = 'cache'
+
+# includes the contract's metadata in the contract's json artifact
+extra_output = []
+# emits the output selection as separate json artifact files
+extra_output_files = ['metadata']
+ffi = true
+force = false
+
+# This is an Option, so we can determine in fork mode whether to use the config's gas price
+# (if set by user) or the remote client's gas price Option<u64>
+gas_price = 10
+gas_limit = 9223372036854775807
+block_base_fee_per_gas = 0
+gas_reports = ['*']
+evm_version = 'london'
+# Ignored Error codes
+# 2018 Function state mutability can be restricted to pure
+# 3420 Source file does not specify required compiler version
+# 3716 Multiple SPDX license identifiers found in source file
+ignored_error_codes = [
+  1878,
+  2018,
+  3420,
+  3716,
+]
+
+initial_balance = '0xffffffffffffffffffffffff'
+sender = '0xafFEaFFEAFfeAfFEAffeaFfEAfFEaffeafFeAFfE'
+tx_origin = '0xAaaaAaAAaaaAAaAAaAaaaaAAAAAaAaaaAaAaaAA0'
+memory_limit = 33_554_432
+
+# compiler settings
 auto_detect_solc = false
-fuzz_runs = 256
-libs = ["lib"]
-gas_reports = ["*"]
-optimizer = false
 out = "out"
-solc = "0.8.15"
+solc = "0.8.17"
 src = "src"
 test = "test"
+build_info = false
 verbosity = 2
+via_ir = true
+# revert_strings = "verboseDebug"
+revert_strings = "debug"
+optimizer = true
+optimizer_runs = 1_337
+optimizerSteps = ''
+sizes = false
+sparse_mode = false
+fs_permissions = []
+fuzz_runs = 512
+
+[profile.default.rpc_storage_caching]
+chains = 'all'
+endpoints = 'all'
 
 [profile.ci]
-fuzz_runs = 1_000
+optimizer = false
+fuzz_runs = 4_069
+force = true
 verbosity = 4
+
+[fuzz]
+runs = 768
+max_test_rejects = 65_536
+max_local_rejects = 16_384
+max_global_rejects = 81_920
+dictionary_weight = 42
+include_storage = true
+include_push_bytes = true
+
+[invariant]
+runs = 320
+depth = 18
+fail_on_revert = false
+call_override = false
+dictionary_weight = 84
+include_storage = true
+include_push_bytes = true
